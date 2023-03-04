@@ -3,7 +3,7 @@
 // in the html.
 var saveBtns = $(".saveBtn");
 var containerTime = $('.time-block');
-var notification = $('.notification');
+
 
 $(document).ready(function () {
   for (var i = 0; i < saveBtns.length; i++) {
