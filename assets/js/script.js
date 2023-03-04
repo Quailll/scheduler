@@ -2,7 +2,8 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 var saveBtns = $(".saveBtn");
-var containerTime = $('.time-block')
+var containerTime = $('.time-block');
+var notification = $('.notification');
 
 $(document).ready(function () {
   for (var i = 0; i < saveBtns.length; i++) {
@@ -11,8 +12,9 @@ $(document).ready(function () {
     var value = $(this).siblings(".description").val();
     var time = $(this).parent().attr("id");
     localStorage.setItem(time, value);
-    })
+    });
   }
+
 
 function hourUpdater() {
   var hour= dayjs().hour();
@@ -20,18 +22,29 @@ function hourUpdater() {
   for (var i =0; i < containerTime.length; i++) {
     var container = parseInt(containerTime[i].id.split("-")[1]);
       if (container === hour){
-        $(this).addClass('present');
-      } else if (containertime < time) {
-        $(this).removeClass('present');
-        $(this).addClass('past');
+        $(containerTime[i]).addClass("present");
+      } else if (container < hour) {
+        $(containerTime[i]).removeClass("present");
+        $(containerTime[i]).addClass("past");
       } else {
-        $(this).removeClass('present');
-        $(this).removeClass('past');
-        $(this).addClass('future');
+        $(containerTime[i]).removeClass("present");
+        $(containerTime[i]).removeClass("past");
+        $(containerTime[i]).addClass("future");
       }
-    
+    console.log()
   }
 }
+  hourUpdater();
+
+setInterval( hourUpdater, 1000)
+
+for (var i = 1; i <= 18; i++) {
+  var key = "hour-" + i;
+  $('#' + key + ' .description').val(localStorage.getItem(key))  
+}
+
+
+$("#currentDay").text(dayjs().format("dddd, MMMM D, YYYY h:mm:ss:a"));
 });
 
 //   if ()
